@@ -1,0 +1,274 @@
+﻿/*
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&display=swap');
+
+:root {
+  --bg: #111;
+  --fg: #eee;
+  --accent: #b78cff;
+  --muted: #888;
+  --border: #2a2a2a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Be Vietnam Pro', sans-serif;
+  letter-spacing: 0.1px;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem 1rem;
+  min-height: 100vh;
+}
+
+.container {
+  width: 100%;
+  max-width: 900px;
+  transition: opacity 0.3s ease;
+}
+
+h1 {
+  text-align: center;
+  font-weight: 600;
+  font-size: 1.8rem;
+  color: var(--accent);
+  margin-bottom: 2rem;
+}
+
+.api-section {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.2rem;
+}
+
+.api-section input, select, button {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--fg);
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.95rem;
+  flex: 1;
+  min-width: 0;
+  outline: none;
+}
+
+.api-section input::placeholder {
+  color: var(--muted);
+}
+
+.api-section button {
+  background: var(--accent);
+  color: #000;
+  cursor: pointer;
+  flex: 0 0 auto;
+  transition: opacity 0.25s;
+}
+.api-section button:hover {
+  opacity: 0.9;
+}
+
+textarea {
+  width: 100%;
+  height: 160px;
+  background: transparent;
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  font-size: 1rem;
+  resize: vertical;
+  outline: none;
+  transition: border 0.2s;
+}
+
+textarea:focus {
+  border-color: var(--accent);
+}
+
+button#refine {
+  display: block;
+  width: 100%;
+  background: var(--accent);
+  color: #000;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: opacity 0.25s;
+}
+
+button#refine:hover {
+  opacity: 0.9;
+}
+
+.results {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.result-block {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  line-height: 1.6;
+  animation: fadeIn 0.5s ease;
+  background: transparent;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+*/
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&display=swap');
+
+/* Bảng màu được đơn giản hóa để có độ tương phản nhẹ nhàng hơn */
+:root {
+    --bg: #151515; /* Nền tối hơn một chút */
+    --surface: #202020; /* Nền cho các ô nhập liệu, nổi bật hơn một chút */
+    --fg: #e0e0e0; /* Màu chữ trắng nhạt, dễ chịu hơn cho mắt */
+    --accent: #b78cff; /* Giữ lại màu nhấn để làm nổi bật khi cần */
+    --muted: #757575; /* Màu chữ mờ hơn, dễ đọc hơn */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+body {
+    background: var(--bg);
+    color: var(--fg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 1rem;
+    min-height: 100vh;
+}
+
+.container {
+    width: 100%;
+    max-width: 800px; /* Thu hẹp một chút để dễ đọc hơn */
+    transition: opacity 0.3s ease;
+    flex: 1;
+}
+
+h1 {
+    text-align: center;
+    font-weight: 500;
+    font-size: 1.6rem; /* Giảm kích thước một chút cho tinh tế hơn */
+    color: var(--fg); /* Chuyển sang màu chữ chính thay vì màu nhấn */
+    margin-bottom: 2.5rem;
+}
+
+/* Áp dụng cho cả input, select và textarea để đồng nhất */
+#api-key, #model-select, #user-input {
+    width: 100%;
+    background: var(--surface);
+    color: var(--fg);
+    border: none; /* Loại bỏ hoàn toàn đường viền */
+    border-radius: 8px;
+    padding: 0.9rem 1rem;
+    font-size: 1rem;
+    outline: none; /* Tắt đường viền mặc định của trình duyệt */
+    transition: box-shadow 0.2s ease; /* Hiệu ứng mượt mà khi focus */
+}
+
+    /* Sử dụng box-shadow thay vì border khi focus để trông hiện đại hơn */
+    #api-key:focus, #model-select:focus, #user-input:focus {
+        box-shadow: 0 0 0 2px var(--accent);
+    }
+
+/* Tạo khoảng cách giữa các trường cấu hình */
+.config {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap; /* Cho phép xuống dòng trên màn hình nhỏ */
+}
+
+    .config > * {
+        flex: 1; /* Các trường sẽ tự động chia đều không gian */
+        min-width: 200px; /* Đảm bảo không bị quá hẹp */
+    }
+
+#user-input {
+    min-height: 180px;
+    resize: vertical;
+}
+
+/* Canh lề và định dạng cho chữ placeholder */
+::placeholder {
+    color: var(--muted);
+    opacity: 1;
+}
+
+/* Định dạng cho vùng kết quả */
+.result {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.result-block {
+    background: var(--surface); /* Sử dụng cùng màu nền với ô nhập liệu */
+    border-radius: 8px;
+    padding: 1.2rem 1.5rem;
+    line-height: 1.7;
+    animation: fadeIn 0.5s ease forwards;
+    opacity: 0;
+}
+
+    /* Hiệu ứng xuất hiện mượt mà cho từng khối kết quả */
+    .result-block:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .result-block:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Định dạng cho footer */
+footer {
+    text-align: center;
+    margin-top: 3rem;
+    color: var(--muted);
+    font-size: 0.65rem;
+}
+
+/* Định dạng cho trạng thái xử lý */
+.status {
+    text-align: center;
+    margin-top: 1rem;
+    color: var(--accent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
