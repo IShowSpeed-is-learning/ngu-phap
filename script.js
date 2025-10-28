@@ -5,7 +5,7 @@
  *
  * This file is part of ngu-phap.
  *
- * Copyright (c) 2025 IShowSpeed-is-learning
+ * Copyright (c) 2025 germineye
  */
 
 // ======= CONFIG =======
