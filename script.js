@@ -56,7 +56,7 @@ async function generateText() {
   apiKey = apiKeyInput.value.trim();
 
   if (!apiKey) {
-    alert("Please enter your API key first!");
+    alert("API key đâu?");
     return;
   }
   
@@ -115,7 +115,7 @@ async function generateText() {
     const parts = content.split(/\n---\n+/).filter(Boolean);
     if (!parts.length) {
       resultContainer.innerHTML =
-        '<div class="result-block">⚠️ No valid output returned. Check API key or try again.</div>';
+        '<div class="result-block">⚠️ có vẻ bị lỗi, hãy kiểm tra và thử lại</div>';
       return;
     }
 
