@@ -8,14 +8,12 @@
  * Copyright (c) 2025 germineye
  */
 
-// ======= CONFIG =======
 const openAIEndpoint = "https://api.openai.com/v1/chat/completions";
 const geminiEndpoint = "https://generativelanguage.googleapis.com/v1beta/models";
 let apiKey = "";
 let modelType = "gpt";
-let modelName = "gpt-5"; // default model (latest)
+let modelName = "gpt-5";
 
-// ======= PROMPT =======
 const editorPrompt = `
 You are an expert English editor.
 
@@ -33,23 +31,39 @@ Given the user's English text, produce up to three distinct rewritten versions a
 ⚠️ Do not add any explanation, titles, or introductions.
 `;
 
-// ======= ELEMENTS =======
 const apiKeyInput = document.getElementById("api-key");
 const modelSelect = document.getElementById("model-select");
 const userInput = document.getElementById("user-input");
 const resultContainer = document.getElementById("result");
 const statusText = document.getElementById("status");
 
-// ======= FUNCTIONS =======
+const STORAGE_KEY = 'ngu_phap_api_key';
+
+function loadApiKey() {
+  const savedKey = localStorage.getItem(STORAGE_KEY);
+  if (savedKey) {
+    apiKeyInput.value = savedKey;
+  }
+}
+
+function saveApiKey(key) {
+  localStorage.setItem(STORAGE_KEY, key);
+}
+
 async function generateText() {
   const text = userInput.value.trim();
-  if (!apiKeyInput.value) {
+  
+  apiKey = apiKeyInput.value.trim();
+
+  if (!apiKey) {
     alert("Please enter your API key first!");
     return;
   }
+  
+  saveApiKey(apiKey);
+  
   if (!text) return;
 
-  apiKey = apiKeyInput.value;
   modelName = modelSelect.value;
   modelType = modelName.startsWith("gemini") ? "gemini" : "gpt";
 
@@ -61,7 +75,6 @@ async function generateText() {
     let content = "";
 
     if (modelType === "gpt") {
-      // ===== OPENAI GPT =====
       const response = await fetch(openAIEndpoint, {
         method: "POST",
         headers: {
@@ -80,7 +93,6 @@ async function generateText() {
       const data = await response.json();
       content = data.choices?.[0]?.message?.content?.trim() || "";
     } else {
-      // ===== GEMINI =====
       const geminiModel = modelName;
       const response = await fetch(
         `${geminiEndpoint}/${geminiModel}:generateContent?key=${apiKey}`,
@@ -100,7 +112,6 @@ async function generateText() {
 
     statusText.textContent = "";
 
-    // Split by the delimiter "\n---\n"
     const parts = content.split(/\n---\n+/).filter(Boolean);
     if (!parts.length) {
       resultContainer.innerHTML =
@@ -108,7 +119,6 @@ async function generateText() {
       return;
     }
 
-    // Create blocks for each output
     parts.forEach((part, i) => {
       const div = document.createElement("div");
       div.className = "result-block";
@@ -122,10 +132,11 @@ async function generateText() {
   }
 }
 
-// ======= EVENT LISTENERS =======
 userInput.addEventListener("keydown", (e) => {
   if (e.key === "Enter" && !e.shiftKey) {
     e.preventDefault();
     generateText();
   }
 });
+
+document.addEventListener('DOMContentLoaded', loadApiKey);
