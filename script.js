@@ -11,8 +11,8 @@
 const openAIEndpoint = "https://api.openai.com/v1/chat/completions";
 const geminiEndpoint = "https://generativelanguage.googleapis.com/v1beta/models";
 let apiKey = "";
-let modelType = "gpt";
-let modelName = "gpt-5";
+let modelType = "gemini";
+let modelName = "gemini-2.5-flash";
 
 const editorPrompt = `
 You are an expert English editor.
@@ -68,7 +68,7 @@ async function generateText() {
   modelType = modelName.startsWith("gemini") ? "gemini" : "gpt";
 
   resultContainer.innerHTML = "";
-  statusText.textContent = "Processing...";
+  statusText.textContent = "đang xử lý...";
   statusText.style.opacity = "1";
 
   try {
