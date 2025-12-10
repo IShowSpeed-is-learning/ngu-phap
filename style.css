@@ -13,10 +13,10 @@
 /* Bảng màu được đơn giản hóa để có độ tương phản nhẹ nhàng hơn */
 :root {
     --bg: #49494B; /* Nền tối hơn một chút */
-    --surface: #72629B; /* Nền cho các ô nhập liệu, nổi bật hơn một chút */
-    --fg: #F0F0F0; /* Màu chữ trắng nhạt, dễ chịu hơn cho mắt */
+    --surface: #FAFAFA; /* Nền cho các ô nhập liệu, nổi bật hơn một chút */
+    --fg: #49494B;
     --accent: #FFA8BC; /* Giữ lại màu nhấn để làm nổi bật khi cần */
-    --muted: #757575; /* Màu chữ mờ hơn, dễ đọc hơn */
+    --muted: #F0F0F0;
 }
 
 * {
