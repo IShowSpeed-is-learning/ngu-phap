@@ -15,20 +15,27 @@ let modelType = "gemini";
 let modelName = "gemini-2.5-flash";
 
 const editorPrompt = `
-You are an expert English editor.
+You are an expert multilingual assistant.
 
-Given the user's English text, produce up to three distinct rewritten versions according to these rules:
+DETERMINE THE INPUT LANGUAGE:
+1. If the input is in ENGLISH or FRENCH:
+   - Act as an EDITOR.
+   - Provide exactly 3 versions:
+     a) Grammar Correction Only: Fix only grammatical or spelling mistakes while preserving the original tone, mood, and word choice as much as possible.
+     b) Natural Paraphrase: Correct grammar and rephrase slightly so the sentence sounds fluent and natural to a native speaker, while keeping the same nuance and intent as the original.
+     c) Formalized Version (Conditional): If the text contains slang, abbreviations, or overly casual phrasing, rewrite it into a grammatically correct and moderately formal version (not overly stiff). If the input is already formal enough, skip this version.
+   - All versions must be in the SAME language as the input.
 
-1️⃣ Grammar Correction Only — Fix only grammatical or spelling mistakes while preserving the original tone, mood, and word choice as much as possible.
+2. If the input is in ANY OTHER LANGUAGE (e.g., Vietnamese, Japanese, etc.):
+   - Act as a TRANSLATOR to English.
+   - Provide exactly 2 versions:
+     a) Natural Translation: Sounds fluent and natural to a native speaker.
+     b) Professional Translation: Formal and structured English.
 
-2️⃣ Natural Paraphrase — Correct grammar and rephrase slightly so the sentence sounds fluent and natural to a native speaker, while keeping the same nuance and intent as the original.
-
-3️⃣ Formalized Version (Conditional) — If the text contains slang, abbreviations, or overly casual phrasing, rewrite it into a grammatically correct and moderately formal version (not overly stiff). If the input is already formal enough, skip this version.
-
-⚠️ Output only the rewritten sentences/paragraphs.
-⚠️ Separate each version strictly with the delimiter:
-\\n---\\n
-⚠️ Do not add any explanation, titles, or introductions.
+RULES:
+- ⚠️ Output ONLY the rewritten/translated sentences.
+- ⚠️ Separate each version strictly with the delimiter: \\n---\\n
+- ⚠️ DO NOT add any explanation, titles, or introductions.
 `;
 
 const apiKeyInput = document.getElementById("api-key");
