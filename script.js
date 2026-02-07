@@ -10,6 +10,8 @@
 
 const openAIEndpoint = "https://api.openai.com/v1/chat/completions";
 const geminiEndpoint = "https://generativelanguage.googleapis.com/v1beta/models";
+const COUNTAPI_ENDPOINT = 'https://api.countapi.xyz/get/ngu-phap/usage';
+const COUNTAPI_HIT_ENDPOINT = 'https://api.countapi.xyz/hit/ngu-phap/usage';
 let apiKey = "";
 let modelType = "gemini";
 let modelName = "gemini-2.5-flash";
@@ -45,6 +47,47 @@ const resultContainer = document.getElementById("result");
 const statusText = document.getElementById("status");
 
 const STORAGE_KEY = 'ngu_phap_api_key';
+
+// Function để load counter hiện tại
+async function loadUsageCount() {
+  try {
+    const response = await fetch(COUNTAPI_ENDPOINT);
+    const data = await response.json();
+    updateCounterDisplay(data.value || 0);
+  } catch (err) {
+    console.error('Failed to load usage count:', err);
+    updateCounterDisplay('???');
+  }
+}
+
+// Function để update counter trên UI
+function updateCounterDisplay(count) {
+  const countValue1 = document.getElementById('count-value');
+  const countValue2 = document.getElementById('count-value-2');
+  
+  if (countValue1) {
+    countValue1.textContent = count;
+    countValue1.classList.add('counter-updating');
+    setTimeout(() => countValue1.classList.remove('counter-updating'), 500);
+  }
+  
+  if (countValue2) {
+    countValue2.textContent = count;
+    countValue2.classList.add('counter-updating');
+    setTimeout(() => countValue2.classList.remove('counter-updating'), 500);
+  }
+}
+
+// Function để increment counter (gọi khi user sử dụng)
+async function incrementUsageCount() {
+  try {
+    const response = await fetch(COUNTAPI_HIT_ENDPOINT);
+    const data = await response.json();
+    updateCounterDisplay(data.value || 0);
+  } catch (err) {
+    console.error('Failed to increment usage count:', err);
+  }
+}
 
 function loadApiKey() {
   const savedKey = localStorage.getItem(STORAGE_KEY);
@@ -126,6 +169,9 @@ async function generateText() {
       return;
     }
 
+    // Increment counter on successful generation
+    incrementUsageCount();
+
     parts.forEach((part, i) => {
       const div = document.createElement("div");
       div.className = "result-block";
@@ -146,4 +192,7 @@ userInput.addEventListener("keydown", (e) => {
   }
 });
 
-document.addEventListener('DOMContentLoaded', loadApiKey);
+document.addEventListener('DOMContentLoaded', () => {
+  loadApiKey();
+  loadUsageCount();
+});
