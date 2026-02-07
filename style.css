@@ -148,3 +148,45 @@ footer {
     opacity: 0;
     transition: opacity 0.3s ease;
 }
+
+/* Header counter badge */
+.counter-badge {
+  float: right;
+  font-size: 0.5em;
+  color: #888;
+  font-weight: normal;
+  opacity: 0.8;
+  transition: opacity 0.3s;
+}
+
+.counter-badge:hover {
+  opacity: 1;
+}
+
+/* Footer counter */
+#usage-counter-footer {
+  font-size: 0.9em;
+  color: #888;
+}
+
+#usage-counter-footer strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Mobile: ẩn header counter để không làm rối layout */
+@media (max-width: 768px) {
+  .counter-badge {
+    display: none;
+  }
+}
+
+/* Animation khi counter update */
+.counter-updating {
+  animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
